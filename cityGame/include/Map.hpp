@@ -17,6 +17,18 @@ class Map
         sf::Vector2i pos, int label, int type);
 
     public:
+    
+    /* 0 = Deselected, 1 = Selected, 2 = Invalid */
+		std::vector<char> selected;
+		unsigned int numSelected;
+
+		/* Select the tiles within the bounds */
+		void select(sf::Vector2i start, sf::Vector2i end, std::vector<TileType> blacklist);
+
+		/* Deselect all tiles */
+		void clearSelected();
+
+
 
     unsigned int width;
     unsigned int height;
@@ -27,8 +39,6 @@ class Map
     std::vector<int> resources;
 
     unsigned int tileSize;
-
-    unsigned int numSelected;
 
     unsigned int numRegions[1];
 
@@ -51,20 +61,10 @@ class Map
     void updateDirection(TileType tileType);
 
     /* Blank map constructor */
-    Map()
-    {
-        this->tileSize = 8;
-        this->width = 0;
-        this->height = 0;
-        this->numRegions[0] = 1;
-    }
+    Map();
     /* Load map from file constructor */
     Map(const std::string& filename, unsigned int width, unsigned int height,
-        std::map<std::string, Tile>& tileAtlas)
-    {
-        this->tileSize = 8;
-        load(filename, width, height, tileAtlas);
-    }
+        std::map<std::string, Tile>& tileAtlas);
 };
 
 #endif /* MAP_HPP */

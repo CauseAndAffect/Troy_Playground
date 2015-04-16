@@ -2,18 +2,32 @@
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <sstream>
+
+#include <stdint.h>
+#include <cstdio>
  
 using namespace sf;
 using namespace std;
  
 int main()
 {
+    size_t width = 320;
+    size_t height = 240;
+    
     VideoMode videoMode(320,240);
     RenderWindow window(videoMode,"Plus Or Minus");
  
     Font font;
     if (!font.loadFromFile("Xanadu.ttf"))
-        return EXIT_FAILURE;     
+        return EXIT_FAILURE;    
+        
+    // Create the move counter
+    size_t numMoves = 14;
+    char mcText[30];
+    sprintf(mcText, "Moves\n%ld", numMoves);
+    Text moveCounter(mcText, font, 20);
+    moveCounter.setPosition(250, 10);
+    moveCounter.setColor(sf::Color::Yellow);
  
     Text title("Plus Or Minus",font,20);
     title.setPosition(10,10);
@@ -59,6 +73,7 @@ int main()
             window.draw(question);
             window.draw(enter);
             window.draw(status);
+            window.draw(moveCounter);
         }
         else
         {
@@ -124,6 +139,30 @@ int main()
                     }
                     textEntered =""; //reset textEntered
                 }
+            }
+            else if (event.type == sf::Event::KeyPressed) {
+              switch(event.key.code) {
+                case sf::Keyboard::Up:
+                  --numMoves;
+                  sprintf(mcText, "Moves\n%ld", numMoves);
+                  moveCounter.setString(mcText);
+                  break;
+                case sf::Keyboard::Down:
+                  --numMoves;
+                  sprintf(mcText, "Moves\n%ld", numMoves);
+                  moveCounter.setString(mcText);
+                  break;
+                case sf::Keyboard::Left:
+                  --numMoves;
+                  sprintf(mcText, "Moves\n%ld", numMoves);
+                  moveCounter.setString(mcText);
+                  break;
+                case sf::Keyboard::Right:
+                  --numMoves;
+                  sprintf(mcText, "Moves\n%ld", numMoves);
+                  moveCounter.setString(mcText);
+                  break;                                    
+               }
             }
         }
  
